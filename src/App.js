@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Button from "@material-ui/core/Button";
+import { useRef } from "react";
 
 function App() {
+  const inputRef = useRef();
+  const triggerSearch = () => {
+    fetch(
+      `http://localhost:5001/search-app-6d150/us-central1/helloWorld?term=${inputRef.current.value}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Google Search App</h1>
+      <input ref={inputRef} type="text" />
+      <Button onClick={triggerSearch} variant="outlined">
+        SUBMIT
+      </Button>
     </div>
   );
 }
